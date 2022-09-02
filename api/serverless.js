@@ -1,14 +1,16 @@
 const Fastify = require('fastify')
 require('dotenv').config()
-const bot = require('../src/bot')
 
 const app = Fastify({ logger: true })
-
-bot
-  .createWebhook({ domain: process.env.VERCEL_URL })
-  .then((webhook) => {
-    app.post(bot.secretPathComponent(), (req, rep) => webhook(req.raw, rep.raw))
-  })
+app.register(require('../src/bot'))
+app.register(require('../src/webhook'))
+app.get('/',  (req, rep) => rep.send(
+  'Hi! This is a Telegram bot server 🤖\n' +
+  '📣 Built with Telegraf\n' +
+  '⚡ Spun up using Fastify\n' +
+  '🚀 Hosted on Vercel\n' +
+  'The webhook is hidden in a secret path that only Telegram knows 🦾'
+))
 
 module.exports = async (req, res) => {
   await app.ready();
