@@ -9,6 +9,7 @@
   "dependencies": {
     "dotenv": "^16.0.2",
     "fastify": "^4.5.3",
+    "fastify-plugin": "^4.2.1",
     "telegraf": "^4.9.1"
   },
   "repository": {
